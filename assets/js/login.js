@@ -19,23 +19,29 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (res.ok) {
-        const data = await res.json(); // expect JSON now
+        const data = await res.json();
 
-        if (data.status === "success") {
-          responseBox.innerHTML = "🎉 " + data.message;
+        console.log("Server response:", data); // <-- ADD THIS
+        const position = data.position?.toLowerCase();
 
-          if (data.position === "Member") {
-            window.location.href = "member/member_dashboard.php";
-          } else if (data.position === "Admin") {
-            window.location.href = "admin_dashboard.php";
-          } else {
-            responseBox.innerHTML = "⚠️ Unknown position.";
-          }
+        if (position === "member") {
+          window.location.href = "member/dashboard.php";
+        } else if (position === "admin") {
+          window.location.href = "dashboard.php";
+        } else if (position === "treasurer") {
+          window.location.href = "treasurer/dashboard.php";
+        } else if (position === "staff") {
+          window.location.href = "staff/dashboard.php";
+        } else if (position === "president") {
+          window.location.href = "president/dashboard.php";
         } else {
-          responseBox.innerHTML = "❌ " + data.message;
+          console.warn("Unexpected position:", data.position);
+          responseBox.innerHTML = "⚠️ Not Registered Member.";
         }
       } else {
-        responseBox.innerHTML = "❌ Error submitting form.";
+        // must parse JSON first before accessing data.message
+        const errorData = await res.json().catch(() => ({}));
+        responseBox.innerHTML = "❌ " + (errorData.message || "Login failed.");
       }
     } catch (err) {
       responseBox.innerHTML = "⚠️ Network error: " + err.message;

@@ -13,7 +13,7 @@ $pension_details= $_POST['pension_details'] ?? '';
 $email          = $_POST['email'] ?? '';
 $password       = $_POST['password'] ?? '';
 $chapter        = $_POST['chapter'] ?? '';
-$position       = "Member";
+$position       = "member";
 $date_added     = date("Y-m-d H:i:s"); // define timestamp
 
 // Hash password

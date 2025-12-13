@@ -1,4 +1,18 @@
 <?php
+session_start();
+// If user already has a session, redirect them
+if (isset($_SESSION['user_id'])) {
+    // You can redirect based on their role/position if needed
+    if ($_SESSION['position'] === 'Admin') {
+        header("Location: admin/dashboard.php");
+        exit;
+    } else {
+        header("Location: member/dashboard.php");
+        exit;
+    }
+}
+
+
     include('templates/header.php');
 
 ?>

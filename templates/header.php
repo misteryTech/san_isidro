@@ -1,12 +1,7 @@
 <?php
 require_once __DIR__ . '/../config.php'; // load constants FIRST
-session_start();
 
-// Redirect to login if no session
-if (!isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "login.php");
-    exit;
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

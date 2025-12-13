@@ -6,7 +6,7 @@ $osca_id  = $_POST['osca_id'] ?? '';
 $password = $_POST['password'] ?? '';
 
 // Prepare query to fetch user by OSCA ID
-$stmt = $conn->prepare("SELECT id, osca_id, password, first_name, last_name, position FROM user_table WHERE osca_id = ?");
+$stmt = $conn->prepare("SELECT * FROM user_table WHERE osca_id = ?");
 $stmt->bind_param("s", $osca_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -23,11 +23,13 @@ if ($result->num_rows === 1) {
         $_SESSION['first_name']= $user['first_name'];
         $_SESSION['last_name'] = $user['last_name'];
         $_SESSION['position']  = $user['position'];
+        $_SESSION['chapter']  = $user['chapter'];
+        $_SESSION['account']  = $user['account'];
 
         echo json_encode([
             "status"   => "success",
             "message"  => "Login successful!",
-            "position" => $user['position']
+            "position" => strtolower(trim($user['position']))
         ]);
 
     } else {
