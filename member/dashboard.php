@@ -4,31 +4,32 @@ ob_start(); // Capture page content
 ?>
 
 <section class="section">
-    <div class="row justify-content-center">
-
+        <div class="row">
         <!-- Membership Upgrade Announcement -->
-        <div class="col-lg-8 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h3 class="card-title fw-bold">Upgrade to Regular Membership</h3>
-                    <p class="mb-3">
-                        As part of our community growth, we are now offering all Associate Members
-                        the opportunity to upgrade into <strong>Regular Members</strong>.
-                    </p>
+        <?php if ($_SESSION['account'] !== "Regular") : ?>
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h3 class="card-title fw-bold">Upgrade to Regular Membership</h3>
+                        <p class="mb-3">
+                            As part of our community growth, we are now offering all Associate Members
+                            the opportunity to upgrade into <strong>Regular Members</strong>.
+                        </p>
 
-                    <div class="alert alert-primary">
-                        Enjoy more benefits, full voting rights, and exclusive member privileges.
+                        <div class="alert alert-primary">
+                            Enjoy more benefits, full voting rights, and exclusive member privileges.
+                        </div>
+
+                        <a href="member_upgrade.php" class="btn btn-primary btn-lg mt-2">
+                            Upgrade Now
+                        </a>
                     </div>
-
-                    <a href="member_upgrade.php" class="btn btn-primary btn-lg mt-2">
-                        Upgrade Now
-                    </a>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
 
         <!-- Carousel Section -->
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="card-title">Announcements Carousel</h5>
@@ -65,6 +66,37 @@ ob_start(); // Capture page content
             </div>
         </div>
 
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Monthly Published List of Deceased Beneficiaries
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Official record of approved deceased benefit applications for the current month.
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="approvedTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name of Deceased</th>
+                                    <th>OSCA ID</th>
+                                    <th>Month Published</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- JavaScript will inject rows here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </section>
 
@@ -72,3 +104,4 @@ ob_start(); // Capture page content
 $content = ob_get_clean();
 include __DIR__ . '/../templates/layout.php';
 ?>
+<script src="transaction/js/display_deceased.js"></script>

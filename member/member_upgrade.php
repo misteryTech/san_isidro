@@ -137,31 +137,15 @@ ob_start(); // Capture page content
 
         <!-- Benefits Column -->
         <div class="col-lg-4 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h3 class="card-title fw-bold text-center">Membership Benefits</h3>
-                    <p class="text-center mb-3">Regular Members are entitled to the following benefits:</p>
 
-                    <ul class="list-group">
-                        <li class="list-group-item">✔ Full voting rights</li>
-                        <li class="list-group-item">✔ Participation in special programs</li>
-                        <li class="list-group-item">✔ Priority access to services</li>
-                        <li class="list-group-item fw-bold text-primary">
-                            ✔ Paid Monthly Mortuary Fees to avail 40,000 package
-                        </li>
-                        <li class="list-group-item">✔ Other exclusive member privileges</li>
-                    </ul>
-                </div>
-            </div>
+              <div id="membershipCardContainer"></div>
         </div>
 
     </div>
 </section>
 
-
+<script src="transaction/js/membership.js"></script>
 <?php
 $content = ob_get_clean();
 include __DIR__ . '/../templates/layout.php';
 ?>
-
-<script src="transaction/js/membership.js"></script>
