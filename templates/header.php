@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config.php'; // load constants FIRST
-
+$current_page = basename($_SERVER['PHP_SELF'], ".php");
 
 ?>
 <!DOCTYPE html>

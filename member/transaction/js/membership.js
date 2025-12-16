@@ -1,4 +1,3 @@
-console.log("membership.js loaded");
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("membership_form");
   const responseBox = document.getElementById("responseBox");
