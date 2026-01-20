@@ -20,42 +20,77 @@ ob_start(); // Capture page content
   <div class="row">
     <!-- Left Column: Profile Card -->
     <div class="col-xl-4">
-      <?php
+     <?php
       include(__DIR__ . '/../database/connection.php');
-        $stmt = $conn->prepare("
-            SELECT ut.*, mt.*
-            FROM user_table AS ut
-            INNER JOIN membership_table AS mt
-                ON ut.osca_id = mt.osca_id
-            WHERE ut.osca_id = ?
-        ");
-        $stmt->bind_param("s", $osca_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $member = $result->fetch_assoc();
+      // Try fetching membership first
+      $stmt = $conn->prepare("
+          SELECT ut.*, mt.*
+          FROM user_table AS ut
+          LEFT JOIN membership_table AS mt
+              ON ut.osca_id = mt.osca_id
+          WHERE ut.osca_id = ?
+      ");
+      $stmt->bind_param("s", $osca_id);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
-            $member_firstname        = $member['first_name'] ?? '';
-            $member_chapter          = $member['chapter'] ?? '';
-            $member_lastname         = $member['last_name'] ?? '';
-            $member_account          = $member['account'] ?? '';
-            $member_email            = $member['email'] ?? '';
-            $member_birthdate        = $member['birth_date'] ?? '';
-            $member_civil_status     = $member['civil_status'] ?? '';
-            $member_address          = $member['place_birth'] ?? '';
-            $member_pensioner        = $member['pensioner'] ?? '';
-            $member_pensioner_details= $member['pension_details'] ?? '';
-            $cp_fullname= $member['cp_fullname'] ?? '';
-            $cp_contact= $member['cp_contact'] ?? '';
-            $cp_email= $member['cp_email'] ?? '';
-            $cp_relationship= $member['cp_relationship'] ?? '';
-            $cp_occupation= $member['cp_occupation'] ?? '';
-            $date_added= $member['date_added'] ?? '';
-        } else {
-            echo "<div class='alert alert-warning'>No member found with that OSCA ID.</div>";
-        }
+      if ($result->num_rows > 0) {
+          $member = $result->fetch_assoc();
 
+          // User Table Data (always exists)
+          $member_firstname        = $member['first_name'] ?? '';
+          $member_lastname         = $member['last_name'] ?? '';
+          $member_account          = $member['account'] ?? '';
+          $member_email            = $member['email'] ?? '';
+          $member_birthdate        = $member['birth_date'] ?? '';
+          $member_civil_status     = $member['civil_status'] ?? '';
+          $member_address          = $member['place_birth'] ?? '';
+
+          // Membership Table Data (may not exist)
+          $member_chapter          = $member['chapter'] ?? '';
+          $member_pensioner        = $member['pensioner'] ?? '';
+          $member_pensioner_details= $member['pension_details'] ?? '';
+          $cp_fullname             = $member['cp_fullname'] ?? '';
+          $cp_contact              = $member['cp_contact'] ?? '';
+          $cp_email                = $member['cp_email'] ?? '';
+          $cp_relationship         = $member['cp_relationship'] ?? '';
+          $cp_occupation           = $member['cp_occupation'] ?? '';
+          $date_added              = $member['date_added'] ?? '';
+      } else {
+          // Only user_table exists
+          $stmt2 = $conn->prepare("SELECT * FROM user_table WHERE osca_id = ?");
+          $stmt2->bind_param("s", $osca_id);
+          $stmt2->execute();
+          $result2 = $stmt2->get_result();
+
+          if ($result2->num_rows > 0) {
+              $member = $result2->fetch_assoc();
+
+              $member_firstname        = $member['first_name'] ?? '';
+              $member_lastname         = $member['last_name'] ?? '';
+              $member_account          = $member['account'] ?? '';
+              $member_email            = $member['email'] ?? '';
+              $member_birthdate        = $member['birth_date'] ?? '';
+              $member_civil_status     = $member['civil_status'] ?? '';
+              $member_address          = $member['place_birth'] ?? '';
+
+              // Membership defaults
+              $member_chapter          = '';
+              $member_pensioner        = '';
+              $member_pensioner_details= '';
+              $cp_fullname             = '';
+              $cp_contact              = '';
+              $cp_email                = '';
+              $cp_relationship         = '';
+              $cp_occupation           = '';
+              $date_added              = '';
+          } else {
+              echo "<div class='alert alert-warning'>No user found with that OSCA ID.</div>";
+          }
+
+          $stmt2->close();
+      }
 
       $stmt->close();
       $conn->close();

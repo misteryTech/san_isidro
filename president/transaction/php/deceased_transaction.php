@@ -8,62 +8,76 @@ $remarks      = $_POST['remarks'] ?? '';
 $action       = $_POST['action'] ?? null; // accept | decline
 $transact_by  = $_SESSION['user_id'] ?? null;
 
-if (!$deceased_id) {
-    echo json_encode(["status"=>"error","message"=>"deceased_id missing"]);
-    exit;
-}
-
-if (!$action) {
-    echo json_encode(["status"=>"error","message"=>"action missing"]);
-    exit;
-}
-
-if (!$transact_by) {
-    echo json_encode(["status"=>"error","message"=>"session id missing"]);
+if (!$deceased_id || !$transact_by) {
+    echo json_encode(["status"=>"error","message"=>"Missing required data"]);
     exit;
 }
 
 try {
-    // 🚀 Start DB transaction
     $conn->begin_transaction();
 
-    /* 1️⃣ Determine new status */
-    if ($action === 'accept') {
-        $newStatus = 'Approved';
-        $promptMsg = 'Membership successfully verified.';
-    } elseif ($action === 'decline') {
-        $newStatus = 'Rejected';
-        $promptMsg = 'Membership has been declined.';
-    } else {
-        throw new Exception('Invalid action.');
+    // Get osca_id
+    $stmt = $conn->prepare("SELECT osca_id FROM deceased_benefit_applications WHERE id = ?");
+    $stmt->bind_param("i", $deceased_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $osca_id = $result['osca_id'] ?? null;
+
+    // Check if registered
+    $isRegistered = false;
+    if ($osca_id) {
+        $check = $conn->prepare("SELECT osca_id FROM user_table WHERE osca_id = ? LIMIT 1");
+        $check->bind_param("s", $osca_id);
+        $check->execute();
+        $isRegistered = $check->get_result()->num_rows > 0;
     }
 
-    /* 2️⃣ Update application record */
+    // If OSCA ID not registered, reject automatically
+    if (!$isRegistered) {
+        $newStatus = 'Rejected';
+        $remarks .= ' — OSCA ID is not registered';
+        $promptMsg = 'Application rejected silently: OSCA ID not registered.';
+    } else {
+        // Handle normal accept/decline action
+        if ($action === 'accept') {
+            $newStatus = 'Approved';
+            $promptMsg = 'Application approved successfully.';
+        } else {
+            $newStatus = 'Rejected';
+            $promptMsg = 'Application declined successfully.';
+        }
+    }
+
+    // Update application
     $stmt1 = $conn->prepare("
         UPDATE deceased_benefit_applications
         SET status = ?, remarks = ?, updated_by = ?, updated_at = NOW()
         WHERE id = ?
     ");
     $stmt1->bind_param("ssii", $newStatus, $remarks, $transact_by, $deceased_id);
+    $stmt1->execute();
 
-    if (!$stmt1->execute()) {
-        throw new Exception($stmt1->error);
-    }
 
-    // ✅ Commit transaction
+      $stmt2 = $conn->prepare("
+        UPDATE user_table
+        SET status = 'Deceased'
+        WHERE osca_id = ?
+    ");
+    $stmt2->bind_param("s",$osca_id);
+    $stmt2->execute();
+
+
+
+
     $conn->commit();
 
     echo json_encode([
-        "status"  => "success",
+        "status" => "success",
         "message" => $promptMsg
     ]);
 
 } catch (Exception $e) {
-    // ❌ Rollback on failure
     $conn->rollback();
-
-    echo json_encode([
-        "status"  => "error",
-        "message" => $e->getMessage()
-    ]);
+    echo json_encode(["status"=>"error","message"=>$e->getMessage()]);
 }
+?>

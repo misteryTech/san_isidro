@@ -1,39 +1,85 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("membership_form");
-  const responseBox = document.getElementById("responseBox");
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // Bootstrap validation
       if (!form.checkValidity()) {
         form.classList.add("was-validated");
         return;
       }
 
+      // Confirm action
+      const confirm = await Swal.fire({
+        icon: "question",
+        title: "Confirm Membership",
+        text: "Do you want to submit this membership application?",
+        showCancelButton: true,
+        confirmButtonText: "Yes, submit",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#198754",
+      });
+
+      if (!confirm.isConfirmed) return;
+
+      // Disable submit button
+      if (submitBtn) submitBtn.disabled = true;
+
+      // Loading alert
+      Swal.fire({
+        title: "Processing...",
+        text: "Submitting membership request",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
       const formData = new FormData(form);
 
       try {
-        const res = await fetch(
-          "../member/transaction/php/membership_submit.php",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
+        const res = await fetch("../member/transaction/php/membership.php", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          throw new Error("Server error");
+        }
 
         const data = await res.json();
+        Swal.close();
 
         if (data.status === "success") {
-          responseBox.innerHTML = `🎉 ${data.message}`;
-          form.reset();
-          form.classList.remove("was-validated");
-          loadMemberCard(); // refresh count after success
+          Swal.fire({
+            icon: "success",
+            title: "Success 🎉",
+            text: data.message,
+            confirmButtonColor: "#198754",
+          }).then(() => {
+            form.reset();
+            form.classList.remove("was-validated");
+            loadMemberCard(); // refresh count
+          });
         } else {
-          responseBox.innerHTML = `❌ ${data.message}`;
+          Swal.fire({
+            icon: "error",
+            title: "Submission Failed",
+            text: data.message,
+            confirmButtonColor: "#dc3545",
+          });
         }
       } catch (err) {
-        responseBox.innerHTML = `⚠️ Network error: ${err.message}`;
+        Swal.close();
+        Swal.fire({
+          icon: "warning",
+          title: "Network Error ⚠️",
+          text: "Unable to connect to the server. Please try again.",
+          confirmButtonColor: "#ffc107",
+        });
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
     });
   }

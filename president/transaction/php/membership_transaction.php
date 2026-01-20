@@ -8,26 +8,37 @@ $remarks       = $_POST['remarks'] ?? '';
 $action        = $_POST['action'] ?? null; // accept | decline
 $transact_by   = $_SESSION['user_id'] ?? null;
 
-if (!$membership_id) {
-    echo json_encode(["status"=>"error","message"=>"membership_id missing"]);
-    exit;
-}
-
-if (!$action) {
-    echo json_encode(["status"=>"error","message"=>"action missing"]);
-    exit;
-}
-
-if (!$transact_by) {
-    echo json_encode(["status"=>"error","message"=>"session id missing"]);
+if (!$membership_id || !$action || !$transact_by) {
+    echo json_encode([
+        "status"  => "error",
+        "message" => "Missing required parameters"
+    ]);
     exit;
 }
 
 try {
-    // 🚀 Start DB transaction
+    // 🚀 Start transaction
     $conn->begin_transaction();
 
-    /* 1️⃣ Insert transaction log */
+    /* 1️⃣ Get OSCA ID from membership_table */
+    $stmtFetch = $conn->prepare("
+        SELECT osca_id
+        FROM membership_table
+        WHERE id = ?
+        FOR UPDATE
+    ");
+    $stmtFetch->bind_param("i", $membership_id);
+    $stmtFetch->execute();
+    $result = $stmtFetch->get_result();
+
+    if ($result->num_rows === 0) {
+        throw new Exception("Membership record not found.");
+    }
+
+    $row     = $result->fetch_assoc();
+    $osca_id = $row['osca_id'];
+
+    /* 2️⃣ Insert transaction log */
     $stmt1 = $conn->prepare("
         INSERT INTO membership_transaction
         (membership_id, remarks, transact_by, action, updated_at)
@@ -39,7 +50,7 @@ try {
         throw new Exception($stmt1->error);
     }
 
-    /* 2️⃣ Determine new status */
+    /* 3️⃣ Determine new membership status */
     if ($action === 'accept') {
         $newStatus = 'Verified';
         $promptMsg = 'Membership successfully verified.';
@@ -50,7 +61,7 @@ try {
         throw new Exception('Invalid action.');
     }
 
-    /* 3️⃣ Update membership status */
+    /* 4️⃣ Update membership_table */
     $stmt2 = $conn->prepare("
         UPDATE membership_table
         SET status = ?, updated_at = NOW()
@@ -62,7 +73,21 @@ try {
         throw new Exception($stmt2->error);
     }
 
-    // ✅ Commit transaction
+    /* 5️⃣ ✅ If accepted, update user_table to Regular */
+    if ($action === 'accept') {
+        $stmt3 = $conn->prepare("
+            UPDATE user_table
+            SET account = 'Regular'
+            WHERE osca_id = ?
+        ");
+        $stmt3->bind_param("s", $osca_id);
+
+        if (!$stmt3->execute()) {
+            throw new Exception($stmt3->error);
+        }
+    }
+
+    // ✅ Commit everything
     $conn->commit();
 
     echo json_encode([
@@ -71,7 +96,7 @@ try {
     ]);
 
 } catch (Exception $e) {
-    // ❌ Rollback on failure
+    // ❌ Rollback on error
     $conn->rollback();
 
     echo json_encode([

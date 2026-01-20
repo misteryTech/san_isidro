@@ -65,7 +65,7 @@
                                         <div class="modal-body">
 
                                             <input type="hidden" name="osca_id" value="<?= htmlspecialchars($row['osca_id']); ?>">
-                                            <input type="text" name="membership_id" value="<?= htmlspecialchars($row['membership_id']); ?>">
+                                            <input type="hidden" name="membership_id" value="<?= htmlspecialchars($row['membership_id']); ?>">
                                             <input type="hidden" name="action" value="accept">
 
                                                 <div class="mb-3">

@@ -15,7 +15,17 @@
 
                 <div class="row mb-3">
                     <div class="col-md-8">
-                        <p><strong>OSCA ID:</strong> <?= htmlspecialchars($row['osca_id']); ?></p>
+
+                     <?= htmlspecialchars($row['osca_id']); ?>
+
+                    <?php if ($isRegistered): ?>
+                        <span class="badge bg-success ms-2">Registered</span>
+                    <?php else: ?>
+                        <span class="badge bg-danger ms-2">Not Registered</span>
+                    <?php endif; ?>
+
+
+
                         <p><strong>Date of Birth:</strong> <?= htmlspecialchars($row['dob']); ?></p>
                         <p><strong>Date of Death:</strong> <?= htmlspecialchars($row['date_of_death']); ?></p>
                         <p><strong>Date Applied:</strong> <?= htmlspecialchars($row['created_at']); ?></p>
@@ -46,7 +56,7 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         Death Certificate
-                    <a href="../assets/<?= htmlspecialchars($row['death_certificate']); ?>"
+                    <a href="../assets/js/transaction/<?= htmlspecialchars($row['death_certificate']); ?>"
                     target="_blank"
                     class="btn btn-sm btn-outline-primary float-end">
                     View
@@ -57,18 +67,18 @@
 
                     <li class="list-group-item">
                         OSCA ID (Deceased)
-                        <a href="../<?= $row['osca_id_file']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
+                        <a href="../assets/js/transaction/<?= $row['osca_id_file']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
                     </li>
 
                     <li class="list-group-item">
                         Claimant Valid ID
-                        <a href="../<?= $row['claimant_id']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
+                        <a href="../assets/js/transaction/<?= $row['claimant_id']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
                     </li>
 
                     <?php if (!empty($row['barangay_clearance'])): ?>
                         <li class="list-group-item">
                             Barangay Clearance
-                            <a href="../<?= $row['barangay_clearance']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
+                            <a href="../assets/js/transaction/<?= $row['barangay_clearance']; ?>" target="_blank" class="btn btn-sm btn-outline-primary float-end">View</a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -95,7 +105,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                    <input type="text" name="id" value="<?= $row['id']; ?>">
                     <input type="hidden" name="action" value="accept">
 
                     <div class="mb-3">

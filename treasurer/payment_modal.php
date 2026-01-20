@@ -14,6 +14,7 @@
         <!-- Hidden inputs -->
         <input type="hidden" name="application_id" id="walkin_application_id">
         <input type="hidden" name="user_id" id="walkin_user_id">
+        <input type="hidden" name="osca_id" id="walk_in_osca_id">
 
         <!-- Display application/deceased name -->
         <p><strong>Deceased:</strong> <span id="walkin_deceased_name"></span></p>
@@ -30,8 +31,7 @@
           <select name="payment_method" class="form-select" required>
             <option value="">Select</option>
             <option value="Cash">Cash</option>
-            <option value="GCash">GCash</option>
-            <option value="Bank">Bank</option>
+
           </select>
         </div>
 

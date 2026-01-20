@@ -14,17 +14,33 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
 
+    // Check if status is deceased
+    if (strtolower($user['status']) === 'deceased') {
+        echo json_encode([
+            "status"  => "error",
+            "message" => "This account is marked as deceased. Login not allowed."
+        ]);
+        exit;
+    }elseif (strtolower($user['status']) === 'inactive') {
+        echo json_encode([
+            "status"  => "error",
+            "message" => "This account is inactive. Please contact support."
+        ]);
+        exit;
+    }
+
     // Verify password
     if (password_verify($password, $user['password'])) {
-        // Success: you can start a session here
+        // Success: start session
         session_start();
-        $_SESSION['user_id']   = $user['id'];
-        $_SESSION['osca_id']   = $user['osca_id'];
-        $_SESSION['first_name']= $user['first_name'];
-        $_SESSION['last_name'] = $user['last_name'];
-        $_SESSION['position']  = $user['position'];
-        $_SESSION['chapter']  = $user['chapter'];
-        $_SESSION['account']  = $user['account'];
+        $_SESSION['user_id']    = $user['id'];
+        $_SESSION['osca_id']    = $user['osca_id'];
+        $_SESSION['first_name'] = $user['first_name'];
+        $_SESSION['last_name']  = $user['last_name'];
+        $_SESSION['position']   = $user['position'];
+        $_SESSION['chapter']    = $user['chapter'];
+        $_SESSION['account']    = $user['account'];
+        $_SESSION['date_registration']    = $user['date_registration'];
 
         echo json_encode([
             "status"   => "success",

@@ -2,6 +2,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginProcess");
   const responseBox = document.getElementById("responseBox");
 
+  /* -----------------------------
+     PASSWORD TOGGLE
+  ----------------------------- */
+  const passwordInput = document.getElementById("yourPassword");
+  const toggleBtn = document.getElementById("togglePassword");
+  const icon = document.getElementById("toggleIcon");
+
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener("click", () => {
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+      icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+    });
+  }
+
+  /* -----------------------------
+     LOGIN SUBMIT
+  ----------------------------- */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -18,30 +36,28 @@ document.addEventListener("DOMContentLoaded", () => {
         body: formData,
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      const data = await res.json();
 
-        console.log("Server response:", data); // <-- ADD THIS
-        const position = data.position?.toLowerCase();
+      // Handle server-side errors (including deceased status)
+      if (data.status !== "success") {
+        responseBox.innerHTML = "❌ " + (data.message || "Login failed.");
+        return;
+      }
 
-        if (position === "member") {
-          window.location.href = "member/dashboard.php";
-        } else if (position === "admin") {
-          window.location.href = "dashboard.php";
-        } else if (position === "treasurer") {
-          window.location.href = "treasurer/dashboard.php";
-        } else if (position === "staff") {
-          window.location.href = "staff/dashboard.php";
-        } else if (position === "president") {
-          window.location.href = "president/dashboard.php";
-        } else {
-          console.warn("Unexpected position:", data.position);
-          responseBox.innerHTML = "⚠️ Not Registered Member.";
-        }
+      const position = data.position?.toLowerCase();
+
+      const routes = {
+        member: "member/dashboard.php",
+        admin: "dashboard.php",
+        treasurer: "treasurer/dashboard.php",
+        staff: "staff/dashboard.php",
+        president: "president/dashboard.php",
+      };
+
+      if (routes[position]) {
+        window.location.href = routes[position];
       } else {
-        // must parse JSON first before accessing data.message
-        const errorData = await res.json().catch(() => ({}));
-        responseBox.innerHTML = "❌ " + (errorData.message || "Login failed.");
+        responseBox.innerHTML = "⚠️ Not Registered Member.";
       }
     } catch (err) {
       responseBox.innerHTML = "⚠️ Network error: " + err.message;

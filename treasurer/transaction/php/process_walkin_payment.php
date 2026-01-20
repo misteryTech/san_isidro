@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $user_id             = $_POST['user_id'] ?? null;
+$osca_id             = $_POST['osca_id'] ?? null;
 $deceased_benefit_id = $_POST['application_id'] ?? null;
 $amount              = $_POST['amount'] ?? null;
 $payment_method      = $_POST['payment_method'] ?? null;
@@ -33,7 +34,7 @@ if (!$user_id || !$deceased_benefit_id || !$amount || !$payment_method) {
 ================================ */
 $stmt = $conn->prepare("
     INSERT INTO payments (
-        user_id,
+        osca_id,
         deceased_benefit_id,
         transaction_type,
         amount,
@@ -47,8 +48,8 @@ $stmt = $conn->prepare("
 ");
 
 $stmt->bind_param(
-    "iisdsssss",
-    $user_id,
+    "sisdsssss",
+    $osca_id,
     $deceased_benefit_id,
     $transaction_type,
     $amount,

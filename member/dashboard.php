@@ -1,13 +1,35 @@
 <?php
 session_start();
 ob_start(); // Capture page content
+require_once __DIR__ . '/../database/connection.php';
+
+$osca_id = $_SESSION['osca_id'] ?? null;
+$hasPending = false;
+
+if ($osca_id) {
+    $stmt = $conn->prepare("
+        SELECT status
+        FROM membership_table
+        WHERE osca_id = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("s", $osca_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $hasPending = true;
+    }
+}
+
+
 ?>
 
 <section class="section">
         <div class="row">
         <!-- Membership Upgrade Announcement -->
         <?php if ($_SESSION['account'] !== "Regular") : ?>
-            <div class="col-lg-8 mb-4">
+            <div class="col-lg-12 mb-4">
                 <div class="card shadow-sm border-0">
                     <div class="card-body text-center">
                         <h3 class="card-title fw-bold">Upgrade to Regular Membership</h3>
@@ -20,9 +42,15 @@ ob_start(); // Capture page content
                             Enjoy more benefits, full voting rights, and exclusive member privileges.
                         </div>
 
-                        <a href="member_upgrade.php" class="btn btn-primary btn-lg mt-2">
-                            Upgrade Now
-                        </a>
+                                                        <?php if (!$hasPending): ?>
+                                        <a href="member_upgrade.php" class="btn btn-primary btn-lg mt-2">
+                                            Upgrade Now
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="badge bg-warning text-dark mt-3">
+                                            Membership Request Pending
+                                        </span>
+                                    <?php endif; ?>
                     </div>
                 </div>
             </div>

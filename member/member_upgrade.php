@@ -45,21 +45,38 @@ ob_start(); // Capture page content
                                         <div class="row mt-4 mb-3">
 
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Full Name</label>
-                                                <input type="text" name="cp_fullname" class="form-control" required>
+                                                <label class="form-label fw-bold">First Name</label>
+                                                <input type="text" name="cp_firstname" class="form-control" required>
                                             </div>
+
 
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Relationship</label>
-                                                <input type="text" name="cp_relationship" class="form-control" placeholder="e.g., Son, Daughter, Spouse" required>
+                                                <label class="form-label fw-bold">Last Name</label>
+                                                <input type="text" name="cp_lastname" class="form-control" required>
                                             </div>
 
-                                            <div class="col-md-6 mt-3">
+                                            <div class="col-md-4 mt-3">
+                                            <label for="cpRelationship" class="form-label fw-bold">Relationship</label>
+                                            <select name="cp_relationship" id="cpRelationship" class="form-select" required>
+                                                <option value="" selected disabled>Choose relationship...</option>
+                                                <option value="son">Son</option>
+                                                <option value="daughter">Daughter</option>
+                                                <option value="spouse">Spouse</option>
+                                                <option value="parent">Parent</option>
+                                                <option value="sibling">Sibling</option>
+                                                <option value="relative">Relative</option>
+                                                <option value="friend">Friend</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a relationship!</div>
+                                            </div>
+
+
+                                            <div class="col-md-4 mt-3">
                                                 <label class="form-label fw-bold">Contact Number</label>
-                                                <input type="text" name="cp_contact" class="form-control" required>
+                                                <input type="number" name="cp_contact" class="form-control" required>
                                             </div>
 
-                                            <div class="col-md-6 mt-3">
+                                            <div class="col-md-4 mt-3">
                                                 <label class="form-label fw-bold">Email</label>
                                                 <input type="email" name="cp_email" class="form-control">
                                             </div>
