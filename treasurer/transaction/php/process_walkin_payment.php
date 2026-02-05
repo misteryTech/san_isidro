@@ -14,6 +14,7 @@ $osca_id             = $_POST['osca_id'] ?? null;
 $deceased_benefit_id = $_POST['application_id'] ?? null;
 $amount              = $_POST['amount'] ?? null;
 $payment_method      = $_POST['payment_method'] ?? null;
+$receipt_no          = $_POST['receipt_no'] ?? null;
 
 $reference_no     = 'WI-' . time() . '-' . rand(1000, 9999);
 $transaction_type = 'walkin';
@@ -38,26 +39,30 @@ $stmt = $conn->prepare("
         deceased_benefit_id,
         transaction_type,
         amount,
+        receipt_no,
         payment_status,
         payment_method,
         reference_no,
         remarks,
         transact_by,
         date_transact
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
 ");
 
 $stmt->bind_param(
-    "sisdsssss",
+    "sisdssssss",
     $osca_id,
     $deceased_benefit_id,
     $transaction_type,
     $amount,
+    $receipt_no,
     $payment_status,
     $payment_method,
     $reference_no,
     $remarks,
-    $transact_by
+    $transact_by,
+
 );
 
 if ($stmt->execute()) {

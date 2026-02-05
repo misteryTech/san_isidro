@@ -9,7 +9,7 @@ ob_start(); // Capture page content
   <h1>Profile</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
       <li class="breadcrumb-item">Members</li>
       <li class="breadcrumb-item active">Profile</li>
     </ol>
@@ -51,8 +51,7 @@ ob_start(); // Capture page content
           $member_chapter          = $member['chapter'] ?? '';
           $member_pensioner        = $member['pensioner'] ?? '';
           $member_pensioner_details= $member['pension_details'] ?? '';
-          $cp_firstname             = $member['cp_firstname'] ?? '';
-          $cp_lastname              = $member['cp_lastname'] ?? '';
+          $cp_fullname             = $member['cp_fullname'] ?? '';
           $cp_contact              = $member['cp_contact'] ?? '';
           $cp_email                = $member['cp_email'] ?? '';
           $cp_relationship         = $member['cp_relationship'] ?? '';
@@ -167,7 +166,7 @@ ob_start(); // Capture page content
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Fullname</div>
-                <div class="col-lg-9 col-md-8"><?= htmlspecialchars($cp_firstname . ' ' . $cp_lastname); ?></div>
+                <div class="col-lg-9 col-md-8"><?= htmlspecialchars($cp_fullname); ?></div>
               </div>
                <div class="row">
                 <div class="col-lg-3 col-md-4 label">Relationship</div>

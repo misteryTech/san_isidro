@@ -2,37 +2,22 @@
 ob_start();
 require_once __DIR__ . '/../database/connection.php';
 
-/*
-|--------------------------------------------------------------------------
-| FETCH PENDING MEMBERSHIP REQUESTS
-|--------------------------------------------------------------------------
-*/
-$membershipStmt = $conn->prepare("
-    SELECT
-        mt.*,
-        ut.first_name,
-        ut.last_name,
-        ut.birth_date,
-        ut.civil_status,
-        ut.place_birth,
-        ut.account,
-        ut.date_registration,
-        ut.chapter,
-        mt.id AS membership_id
-    FROM membership_table mt
-    LEFT JOIN user_table ut ON mt.osca_id = ut.osca_id
+$stmt = $conn->prepare("
+    SELECT mt.*, ut.first_name, ut.last_name, ut.birth_date, ut.civil_status,
+           ut.place_birth, ut.account, ut.date_registration, ut.chapter,
+           mt.id AS membership_id
+    FROM membership_table AS mt
+    LEFT JOIN user_table AS ut
+        ON mt.osca_id = ut.osca_id
     WHERE mt.status = 'Pending'
 ");
 
-$membershipStmt->execute();
-$result = $membershipStmt->get_result();
+$stmt->execute();
+$result = $stmt->get_result();
 
-
-$membershipFeeCheckStmt = $conn->prepare("
-    SELECT 1
-    FROM membership_fees
-    WHERE osca_id = ?
-    LIMIT 1
+// PREPARE CHECKER STATEMENT
+$verifyStmt = $conn->prepare("
+    SELECT osca_id FROM user_table WHERE osca_id = ? LIMIT 1
 ");
 
 
@@ -58,48 +43,33 @@ $membershipFeeCheckStmt = $conn->prepare("
 
                         <tbody>
                         <?php if ($result->num_rows > 0): ?>
+                            <?php $counter = 0; ?>
                             <?php while ($row = $result->fetch_assoc()): ?>
-
                                 <?php
-
-                                $oscaId = $row['osca_id'];
-
-                                        /* CHECK IF OSCA ID EXISTS IN MEMBERSHIP_FEE */
-                                        $membershipFeeCheckStmt->bind_param("s", $oscaId);
-                                        $membershipFeeCheckStmt->execute();
-                                        $feeCheckResult = $membershipFeeCheckStmt->get_result();
-
-                                $hasMembershipFee = $feeCheckResult->num_rows > 0;
+                                    $counter++;
+                                    $modalId = "userModal" . $counter;
+                                    $acceptModalId = "acceptModal" . $counter;
+                                    $declineModalId = "declineModal" . $counter;
 
 
-                                    $modalId        = "viewModal_" . $row['membership_id'];
-                                    $acceptModalId  = "acceptModal_" . $row['membership_id'];
-                                    $declineModalId = "declineModal_" . $row['membership_id'];
 
-                                    $fullName = trim(($row['first_name'] ?? '') . ' ' . ($row['last_name'] ?? ''));
                                 ?>
-
                                 <tr>
-                                    <td><?= htmlspecialchars($fullName); ?></td>
+                                    <td><?= htmlspecialchars(($row['first_name'] ?? '') . ' ' . ($row['last_name'] ?? '')); ?></td>
                                     <td><?= htmlspecialchars($row['osca_id']); ?></td>
                                     <td><?= htmlspecialchars($row['date_registration'] ?? ''); ?></td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#<?= $modalId; ?>">View</button>
-                                      <button class="btn btn-success btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#<?= $acceptModalId; ?>"
-                                        <?= !$hasMembershipFee ? 'disabled' : ''; ?>>
-                                        Accept
-                                    </button>
-
+                                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#<?= $acceptModalId; ?>">Accept</button>
                                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#<?= $declineModalId; ?>">Decline</button>
                                     </td>
                                 </tr>
 
-                                <?php include "transaction_modal.php"; ?>
-
+                                <?php include("transaction_modal.php"); ?>
                             <?php endwhile; ?>
+
                         <?php else: ?>
+                            <!-- ✅ TABLE-ONLY MESSAGE -->
                             <tr>
                                 <td colspan="4" class="text-center text-muted py-4">
                                     No membership request found.
@@ -112,12 +82,13 @@ $membershipFeeCheckStmt = $conn->prepare("
                 </div>
             </div>
 
+
         </div>
     </div>
 </section>
 
 <?php
-$membershipStmt->close();
+$stmt->close();
 $conn->close();
 
 $content = ob_get_clean();

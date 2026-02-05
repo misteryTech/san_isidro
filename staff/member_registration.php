@@ -27,14 +27,14 @@ require_once __DIR__ . '/../database/connection.php';
                   <div class="invalid-feedback">Please enter your OSCA ID!</div>
                 </div>
 
-                <div class="col-md-6">
-                  <label for="chapter" class="form-label">Chapter</label>
-                  <select name="chapter" class="form-select" id="chapter" required>
-                    <option value="">Choose...</option>
-                    <option value="Chapter1">Chapter 1</option>
-                  </select>
-                  <div class="invalid-feedback">Please select Chapter!</div>
-                </div>
+                  <div class="col-md-6">
+                <label for="chapter" class="form-label">Chapter</label>
+                <select name="chapter" class="form-select" id="chapter" required>
+                  <option value="">Loading chapters...</option>
+                </select>
+                <div class="invalid-feedback">Please select Chapter!</div>
+                 </div>
+
 
                 <!-- Name Fields -->
                 <div class="col-md-4">

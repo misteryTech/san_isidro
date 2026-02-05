@@ -78,7 +78,7 @@ include('templates/header.php');
         <div class="col-lg-8 col-md-10">
 
           <div class="text-center py-4">
-            <a href="index.html" class="logo d-flex align-items-center justify-content-center w-auto">
+            <a href="#" class="logo d-flex align-items-center justify-content-center w-auto">
               <span>Member Registration</span>
             </a>
           </div>
@@ -99,15 +99,13 @@ include('templates/header.php');
                   <input type="text" name="osca_id" class="form-control" id="oscaId" required>
                   <div class="invalid-feedback">Please enter your OSCA ID!</div>
                 </div>
-
-                <div class="col-md-6">
-                  <label for="chapter" class="form-label">Chapter</label>
-                  <select name="chapter" class="form-select" id="chapter" required>
-                    <option value="">Choose...</option>
-                    <option value="Chapter1">Chapter 1</option>
-                  </select>
-                  <div class="invalid-feedback">Please select Chapter!</div>
-                </div>
+              <div class="col-md-6">
+                <label for="chapter" class="form-label">Chapter</label>
+                <select name="chapter" class="form-select" id="chapter" required>
+                  <option value="">Loading chapters...</option>
+                </select>
+                <div class="invalid-feedback">Please select Chapter!</div>
+              </div>
 
                 <!-- Name Fields -->
                 <div class="col-md-4">

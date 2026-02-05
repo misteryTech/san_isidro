@@ -19,6 +19,11 @@
         <!-- Display application/deceased name -->
         <p><strong>Deceased:</strong> <span id="walkin_deceased_name"></span></p>
 
+        <div class="mb-3">
+          <label class="form-label">Receipt No.</label>
+          <input type="text" name="receipt_no" class="form-control" id="walkin_receipt" placeholder="Enter receipt number" required>
+        </div>
+
         <!-- Amount -->
         <div class="mb-3">
           <label class="form-label">Amount</label>

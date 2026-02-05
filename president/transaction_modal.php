@@ -38,11 +38,19 @@
                                                 <hr>
                                                 <!-- Membership-specific fields -->
                                                 <h3 class="text-primary">Contact Person</h3>
-                                                <p><strong>Name:</strong> <?= htmlspecialchars($row['cp_fullname'] ?? ''); ?></p>
+                                                <p><strong>Name:</strong> <?= htmlspecialchars($row['cp_firstname'] ?? '') . ' ' . htmlspecialchars($row['cp_lastname'] ?? ''); ?></p>
                                                 <p><strong>Relationship:</strong> <?= htmlspecialchars($row['cp_relationship'] ?? ''); ?></p>
                                                 <p><strong>Mobile No.:</strong> <?= htmlspecialchars($row['cp_contact'] ?? ''); ?></p>
                                                 <p><strong>Email:</strong> <?= htmlspecialchars($row['cp_email'] ?? ''); ?></p>
                                                 <p><strong>Occupation:</strong> <?= htmlspecialchars($row['cp_occupation'] ?? ''); ?></p>
+
+                                                <?php if (!$hasMembershipFee): ?>
+                                                    <div class="alert alert-warning">
+                                                        <strong>Notice:</strong> No membership fee record found for this OSCA ID.
+                                                        <br>
+                                                        Please ensure payment is completed before approval.
+                                                    </div>
+                                                <?php endif; ?>
 
                                             </div>
                                             <div class="modal-footer">
