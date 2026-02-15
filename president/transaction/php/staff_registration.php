@@ -26,7 +26,7 @@ try {
     $pensioner        = $_POST['pensioner'] ?? null;
     $pension_details  = $_POST['pension_details'] ?? null;
     $date_registration= $_POST['date_registration'] ?? date('Y-m-d H:i:s');
-    $email            = $_POST['email'] ?? null;
+    $mobileno            = $_POST['mobileno'] ?? null;
     $account          = $_POST['account'] ?? 'Regular';
     $status           = $_POST['status'] ?? 'Active';
 
@@ -45,7 +45,7 @@ try {
         INSERT INTO user_table (
             chapter, osca_id, first_name, middle_name, last_name, birth_date,
             civil_status, place_birth, pensioner, pension_details,
-            date_registration, position, password, email, account, status
+            date_registration, position, password, mobileno, account, status
         ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ");
 
@@ -53,7 +53,7 @@ try {
         "ssssssssssssssss",
         $chapter, $osca_id, $first_name, $middle_name, $last_name,
         $birth_date, $civil_status, $place_birth, $pensioner, $pension_details,
-        $date_registration, $position, $password, $email, $account, $status
+        $date_registration, $position, $password, $mobileno, $account, $status
     );
 
     $stmt->execute();

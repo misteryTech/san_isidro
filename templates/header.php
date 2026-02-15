@@ -15,8 +15,8 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="<?php echo ASSETS_URL; ?>img/favicon.png" rel="icon">
-  <link href="<?php echo ASSETS_URL; ?>img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="<?php echo ASSETS_URL; ?>../assets/img/san_isidro.png" rel="icon">
+  <link href="<?php echo ASSETS_URL; ?>../assets/img/san_isidro.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">

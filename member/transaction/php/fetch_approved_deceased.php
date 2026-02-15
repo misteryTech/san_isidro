@@ -11,6 +11,8 @@ $query = "
     LEFT JOIN user_table ut
         ON dba.osca_id = ut.osca_id
     WHERE dba.status = 'approved'
+      AND YEAR(dba.created_at) = YEAR(CURDATE())
+      AND MONTH(dba.created_at) = MONTH(CURDATE())
     ORDER BY dba.created_at DESC
 ";
 

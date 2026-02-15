@@ -99,11 +99,20 @@ require_once __DIR__ . '/../database/connection.php';
                 </div>
 
                 <!-- Contact & Password -->
+                 <!-- Contact & Password -->
                 <div class="col-md-6">
-                  <label for="email" class="form-label">Email (Guardian / Contact Person)</label>
-                  <input type="email" name="email" class="form-control" id="email" required>
-                  <div class="invalid-feedback">Please enter a valid email address!</div>
+                  <label for="mobileno" class="form-label">Mobile No. (Guardian / Contact Person)</label>
+                  <input
+                    type="text"
+                    name="mobileno"
+                    class="form-control"
+                    id="mobileno"
+                    maxlength="11"
+                    pattern="\d{11}"
+                    required>
+                  <div class="invalid-feedback">Please enter an 11-digit mobile number.</div>
                 </div>
+
 
                 <div class="col-md-6">
                   <label for="password" class="form-label">Password</label>

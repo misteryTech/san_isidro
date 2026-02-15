@@ -5,7 +5,7 @@
     <!-- Dashboard link (visible to all) -->
     <li class="nav-item">
       <a class="nav-link <?php echo ($current_page === 'dashboard') ? 'active' : ''; ?>"
-         href="dashboard.php">
+         href="dashboard">
         <i class="bi bi-house"></i>
         <span>Dashboard</span>
       </a>
@@ -21,14 +21,14 @@
         </a>
         <ul id="staff-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="member_list.php">
+            <a href="member_list">
               <i class="bi bi-circle"></i>
               <span>Member List</span>
             </a>
           </li>
 
           <li>
-            <a href="member_registration.php">
+            <a href="member_registration">
               <i class="bi bi-circle"></i>
               <span>Member Registration</span>
             </a>
@@ -42,7 +42,7 @@
         </a>
         <ul id="payment-list-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="payment_list.php">
+            <a href="payment_list">
               <i class="bi bi-circle"></i>
               <span>Payment List</span>
             </a>
@@ -57,7 +57,7 @@
         </a>
         <ul id="chapter-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="chapter_list.php">
+            <a href="chapter_list">
               <i class="bi bi-circle"></i>
               <span>Chapter List</span>
             </a>
@@ -83,7 +83,7 @@
 
 
           <li>
-            <a href="associate_member.php">
+            <a href="associate_member">
               <i class="bi bi-circle"></i>
               <span>Associate Member</span>
             </a>
@@ -91,7 +91,7 @@
 
 
           <li>
-            <a href="member_request.php">
+            <a href="member_request">
               <i class="bi bi-circle"></i>
               <span>Member Request</span>
             </a>
@@ -100,13 +100,13 @@
 
 
           <li>
-            <a href="regular_member.php">
+            <a href="regular_member">
               <i class="bi bi-circle"></i>
               <span>Regular Member</span>
             </a>
           </li>
           <li>
-            <a href="deceased_member.php">
+            <a href="deceased_member">
               <i class="bi bi-circle"></i>
               <span>Deceased Member</span>
             </a>
@@ -120,7 +120,7 @@
         </a>
         <ul id="staff-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="staff.php">
+            <a href="staff">
               <i class="bi bi-circle"></i>
               <span>Staff List</span>
             </a>
@@ -135,7 +135,7 @@
         </a>
         <ul id="payment-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="payment_list.php">
+            <a href="payment_list">
               <i class="bi bi-circle"></i>
               <span>Payment List</span>
             </a>
@@ -153,7 +153,7 @@
         <ul id="deceased-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
 
           <li>
-                  <a href="chapter_report.php" class="<?php echo ($current_page === 'chapter_report') ? 'active' : ''; ?>">
+                  <a href="chapter_report" class="<?php echo ($current_page === 'chapter_report') ? 'active' : ''; ?>">
                       <i class="bi bi-circle"></i>
                       <span>Chapter Report</span>
                   </a>
@@ -161,7 +161,7 @@
 
 
           <li>
-            <a href="deceased_table.php">
+            <a href="deceased_table">
               <i class="bi bi-circle"></i>
               <span>Deceased Request</span>
             </a>
@@ -169,7 +169,7 @@
 
 
          <li>
-            <a href="payment_request.php" class="<?php echo ($current_page === 'payment_request') ? 'active' : ''; ?>">
+            <a href="payment_request" class="<?php echo ($current_page === 'payment_request') ? 'active' : ''; ?>">
               <i class="bi bi-circle"></i>
               <span>Payment Release</span>
             </a>
@@ -194,7 +194,7 @@
           </a>
           <ul id="staff-nav" class="nav-content collapse <?php echo ($current_page === 'deceased_list') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
             <li>
-              <a href="deceased_list.php" class="<?php echo ($current_page === 'deceased_list') ? 'active' : ''; ?>">
+              <a href="deceased_list" class="<?php echo ($current_page === 'deceased_list') ? 'active' : ''; ?>">
                 <i class="bi bi-circle"></i>
                 <span>List of Member</span>
               </a>
@@ -209,13 +209,13 @@
           </a>
           <ul id="payment-nav" class="nav-content collapse <?php echo ($current_page === 'payment_list') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
             <li>
-              <a href="payment_list.php" class="<?php echo ($current_page === 'payment_list') ? 'active' : ''; ?>">
+              <a href="payment_list" class="<?php echo ($current_page === 'payment_list') ? 'active' : ''; ?>">
                 <i class="bi bi-circle"></i>
                 <span>Mortuary Payment</span>
               </a>
             </li>
             <li>
-              <a href="membership_payment.php" class="<?php echo ($current_page === 'membership_payment') ? 'active' : ''; ?>">
+              <a href="membership_payment" class="<?php echo ($current_page === 'membership_payment') ? 'active' : ''; ?>">
                 <i class="bi bi-circle"></i>
                 <span>Membership Payment</span>
               </a>
@@ -238,7 +238,7 @@
           </a>
           <ul id="member-nav" class="nav-content collapse <?php echo ($current_page === 'member_list' || $current_page === 'deceased_member') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
             <li>
-              <a href="member_list.php" class="<?php echo ($current_page === 'member_list') ? 'active' : ''; ?>">
+              <a href="member_list" class="<?php echo ($current_page === 'member_list') ? 'active' : ''; ?>">
                 <i class="bi bi-circle"></i>
                 <span>Member List</span>
               </a>
@@ -247,7 +247,7 @@
 
 
                <li>
-                  <a href="deceased_member.php" class="<?php echo ($current_page === 'deceased_member') ? 'active' : ''; ?>">
+                  <a href="deceased_member" class="<?php echo ($current_page === 'deceased_member') ? 'active' : ''; ?>">
                     <i class="bi bi-circle"></i>
                     <span>Deceased Member</span>
                   </a>
@@ -266,13 +266,13 @@
           <ul id="payment-nav" class="nav-content collapse <?php echo ($current_page === 'payment_request' || $current_page === 'walkin_payment' || $current_page === 'view_payment_details') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
 
                     <li>
-                        <a href="walkin_payment.php" class="<?php echo ($current_page === 'walkin_payment') ? 'active' : ''; ?>">
+                        <a href="walkin_payment" class="<?php echo ($current_page === 'walkin_payment') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Walkin Payment</span>
                         </a>
                     </li>
                      <li>
-                        <a href="membership_payment.php" class="<?php echo ($current_page === 'membership_payment') ? 'active' : ''; ?>">
+                        <a href="membership_payment" class="<?php echo ($current_page === 'membership_payment') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Membership Payment</span>
                         </a>
@@ -291,14 +291,14 @@
 
           <ul id="transac-nav" class="nav-content collapse <?php echo ($current_page === 'transaction_payment' || $current_page === 'walkin_payment' || $current_page === 'view_payment_details') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="transaction_payment.php" class="<?php echo ($current_page === 'transaction_payment') ? 'active' : ''; ?>">
+                        <a href="transaction_payment" class="<?php echo ($current_page === 'transaction_payment') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Release Payment</span>
                         </a>
                     </li>
 
                         <li>
-                        <a href="confirm_payment.php" class="<?php echo ($current_page === 'confirm_payment') ? 'active' : ''; ?>">
+                        <a href="confirm_payment" class="<?php echo ($current_page === 'confirm_payment') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Confirm Payment</span>
                         </a>
@@ -322,14 +322,14 @@
 
           <ul id="reports-nav" class="nav-content collapse <?php echo ($current_page === 'transaction_reports' || $current_page === 'collection_reports') ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="chapter_report.php" class="<?php echo ($current_page === 'chapter_report') ? 'active' : ''; ?>">
+                        <a href="chapter_report" class="<?php echo ($current_page === 'chapter_report') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Chapter Report</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="disburstment_list.php" class="<?php echo ($current_page === 'collection_reports') ? 'active' : ''; ?>">
+                        <a href="disburstment_list" class="<?php echo ($current_page === 'collection_reports') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Disburstment</span>
                         </a>
@@ -337,13 +337,13 @@
 
 
                     <li>
-                        <a href="transaction_reports.php" class="<?php echo ($current_page === 'transaction_reports' || $current_page === 'collection_reports') ? 'active' : ''; ?>">
+                        <a href="transaction_reports" class="<?php echo ($current_page === 'transaction_reports' || $current_page === 'collection_reports') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Transaction Logs</span>
                         </a>
                     </li>
                     <li>
-                        <a href="collection_reports.php" class="<?php echo ($current_page === 'collection_reports') ? 'active' : ''; ?>">
+                        <a href="collection_reports" class="<?php echo ($current_page === 'collection_reports') ? 'active' : ''; ?>">
                             <i class="bi bi-circle"></i>
                             <span>Collection Reports</span>
                         </a>

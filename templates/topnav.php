@@ -62,12 +62,17 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="../assistance_page.php">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
+         <?php if (isset($position) && $position === "member" && $account === "Regular") : ?>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="../assistance_page.php">
+              <i class="bi bi-question-circle"></i>
+              <span>Need Help?</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <?php endif; ?>
             <li>
               <hr class="dropdown-divider">
             </li>

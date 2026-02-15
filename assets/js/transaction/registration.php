@@ -18,25 +18,25 @@ $place_birth     = trim($_POST['place_birth'] ?? '');
 $civil_status    = $_POST['civil_status'] ?? '';
 $pensioner       = $_POST['pensioner'] ?? '';
 $pension_details = trim($_POST['pension_details'] ?? '');
-$email           = trim($_POST['email'] ?? '');
+$mobileno           = trim($_POST['mobileno'] ?? '');
 $password        = $_POST['password'] ?? '';
 $chapter         = trim($_POST['chapter'] ?? '');
 $position        = "member";
 $date_added      = date("Y-m-d H:i:s");
 
 // Basic validation
-if (empty($osca_id) || empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
+if (empty($osca_id) || empty($first_name) || empty($last_name) || empty($mobileno) || empty($password)) {
     response("error", "Please fill in all required fields.");
 }
 
 // Check duplicate email or OSCA ID
-$check = $conn->prepare("SELECT id FROM user_table WHERE email = ? OR osca_id = ?");
-$check->bind_param("ss", $email, $osca_id);
+$check = $conn->prepare("SELECT id FROM user_table WHERE mobileno = ? OR osca_id = ?");
+$check->bind_param("ss", $mobileno, $osca_id);
 $check->execute();
 $check->store_result();
 
 if ($check->num_rows > 0) {
-    response("error", "Email or OSCA ID is already registered.");
+    response("error", "Mobile Number or OSCA ID is already registered.");
 }
 $check->close();
 
@@ -47,7 +47,7 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 $stmt = $conn->prepare("
     INSERT INTO user_table
     (osca_id, first_name, middle_name, last_name, birth_date, place_birth,
-     civil_status, pensioner, pension_details, email, password, chapter,
+     civil_status, pensioner, pension_details, mobileno, password, chapter,
      position, date_registration)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
@@ -63,7 +63,7 @@ $stmt->bind_param(
     $civil_status,
     $pensioner,
     $pension_details,
-    $email,
+    $mobileno,
     $hashedPassword,
     $chapter,
     $position,

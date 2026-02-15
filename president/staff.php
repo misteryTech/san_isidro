@@ -189,8 +189,8 @@ $result = $stmt->get_result();
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="mobileno" name="mobileno" class="form-control">
                     </div>
 
                     <div class="col-md-6">

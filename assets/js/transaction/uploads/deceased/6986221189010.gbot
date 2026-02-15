@@ -1,0 +1,479 @@
+{
+  "$type": "Grimoire.Botting.Configuration, Grimoire",
+  "Commands": {
+    "$type": "System.Collections.Generic.List`1[[Grimoire.Botting.IBotCommand, Grimoire]], mscorlib",
+    "$values": [
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "Prefarm"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "╰(´•‿•)╯`"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "  ￣︶￣"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "newyearlab Storyline"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdJoin2, Grimoire",
+        "Map": "newyearlab",
+        "Room": "1e99",
+        "Cell": "Enter",
+        "Pad": "Spawn"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdDelay, Grimoire",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdMapIsNot, Grimoire",
+        "Tag": "Map",
+        "Text": "Map is not",
+        "Value1": "newyearlab",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 3
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBotDelay2, Grimoire",
+        "Delay": "1000"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Combat.CmdSkillSet, Grimoire",
+        "Name": "BOSSFIGHT"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1524"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1524"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1524",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1525"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%762%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdDelay, Grimoire",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1524"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1525"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1525"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1525",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1526"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdMoveToCell, Grimoire",
+        "Cell": "r2",
+        "Pad": "Down"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Combat.CmdKill, Grimoire",
+        "Monster": "Chaos-Saw Sneevil"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotCompleted, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest can not be turned in",
+        "Value1": "1525",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 2
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1525"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1526"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1526"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1526",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1527"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%763%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotCompleted, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest can not be turned in",
+        "Value1": "1526",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 2
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1526"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1527"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1527"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1527",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1528"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdMoveToCell, Grimoire",
+        "Cell": "r3",
+        "Pad": "Right"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Combat.CmdKill, Grimoire",
+        "Monster": "Chaos Rhino Beetle"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotCompleted, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest can not be turned in",
+        "Value1": "1527",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 2
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1527"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1528"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1528"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1528",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1529"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdMoveToCell, Grimoire",
+        "Cell": "r3",
+        "Pad": "Right"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Combat.CmdKill, Grimoire",
+        "Monster": "Chaorrupted Polar Bear"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotCompleted, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest can not be turned in",
+        "Value1": "1528",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 2
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1528"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1529"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1530"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1530",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdGotoLabel, Grimoire",
+        "Label": "1530"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdMoveToCell, Grimoire",
+        "Cell": "r3",
+        "Pad": "Right"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%764%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%765%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%766%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdPacket2, Grimoire",
+        "Packet": "%xt%zm%getMapItem%28413%767%\n",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotCompleted, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest can not be turned in",
+        "Value1": "1530",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 5
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1530",
+        "ItemID": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdBlank3, Grimoire",
+        "Text": "",
+        "R": 220,
+        "G": 220,
+        "B": 220
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdLabel, Grimoire",
+        "Name": "1530"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdAcceptQuest2, Grimoire",
+        "QuestID": "1531"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.Statements.CmdQuestNotInProgress, Grimoire",
+        "Tag": "Quest",
+        "Text": "Quest is not in progress",
+        "Value1": "1531",
+        "Value2": ""
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdIndex, Grimoire",
+        "Index": 2
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Map.CmdMoveToCell, Grimoire",
+        "Cell": "r5",
+        "Pad": "Left"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Combat.CmdKill, Grimoire",
+        "Monster": "*"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdDelay, Grimoire",
+        "Delay": 1500
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Quest.CmdCompleteQuest2, Grimoire",
+        "QuestID": "1531"
+      },
+      {
+        "$type": "Grimoire.Botting.Commands.Misc.CmdStopBotWithMessage, Grimoire",
+        "Message": "Bot Done!,:)"
+      }
+    ]
+  },
+  "Skills": {
+    "$type": "System.Collections.Generic.List`1[[Grimoire.Game.Data.Skill, Grimoire]], mscorlib",
+    "$values": [
+      {
+        "$type": "Grimoire.Game.Data.Skill, Grimoire",
+        "Text": "[BOSSFIGHT]",
+        "Type": 2
+      },
+      {
+        "$type": "Grimoire.Game.Data.Skill, Grimoire",
+        "Text": "1: Atramentous Shade",
+        "Index": "1"
+      },
+      {
+        "$type": "Grimoire.Game.Data.Skill, Grimoire",
+        "Text": "2: Wicked Purgatory",
+        "Index": "2"
+      },
+      {
+        "$type": "Grimoire.Game.Data.Skill, Grimoire",
+        "Text": "3: Depraved Empowerment",
+        "Index": "3"
+      },
+      {
+        "$type": "Grimoire.Game.Data.Skill, Grimoire",
+        "Text": "4: Anathema",
+        "Index": "4"
+      }
+    ]
+  },
+  "Quests": {
+    "$type": "System.Collections.Generic.List`1[[Grimoire.Game.Data.Quest, Grimoire]], mscorlib",
+    "$values": []
+  },
+  "Author": "Prefarm",
+  "Description": "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",
+  "Boosts": {
+    "$type": "System.Collections.Generic.List`1[[Grimoire.Game.Data.InventoryItem, Grimoire]], mscorlib",
+    "$values": []
+  },
+  "Drops": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": []
+  },
+  "Server": {
+    "$type": "Grimoire.Game.Data.Server, Grimoire",
+    "iMax": 1000,
+    "sName": "Twilly",
+    "sLang": "xx",
+    "iPort": 5588,
+    "sIP": "socket5.aq.com"
+  },
+  "SkillDelay": 100,
+  "EnablePickup": true,
+  "RelogDelay": 5000,
+  "BotDelay": 1000,
+  "WaitForAllSkills": true,
+  "SkipDelayIndexIf": true,
+  "InfiniteAttackRange": true,
+  "Untarget": true,
+  "HidePlayers": true,
+  "SkipCutscenes": true,
+  "DisableAnimations": true,
+  "WalkSpeed": 8,
+  "NotifyUponDrop": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": []
+  },
+  "RestMp": 60,
+  "RestHp": 60,
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": []
+  },
+  "RelogUponQuestFailure": true,
+  "RelogUponItemBuyFailure": true
+}

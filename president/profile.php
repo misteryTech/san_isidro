@@ -42,7 +42,7 @@ ob_start(); // Capture page content
           $member_firstname        = $member['first_name'] ?? '';
           $member_lastname         = $member['last_name'] ?? '';
           $member_account          = $member['account'] ?? '';
-          $member_email            = $member['email'] ?? '';
+          $member_mobileno            = $member['mobileno'] ?? '';
           $member_birthdate        = $member['birth_date'] ?? '';
           $member_civil_status     = $member['civil_status'] ?? '';
           $member_address          = $member['place_birth'] ?? '';
@@ -53,7 +53,7 @@ ob_start(); // Capture page content
           $member_pensioner_details= $member['pension_details'] ?? '';
           $cp_fullname             = $member['cp_fullname'] ?? '';
           $cp_contact              = $member['cp_contact'] ?? '';
-          $cp_email                = $member['cp_email'] ?? '';
+          $cp_mobileno                = $member['cp_mobileno'] ?? '';
           $cp_relationship         = $member['cp_relationship'] ?? '';
           $cp_occupation           = $member['cp_occupation'] ?? '';
           $date_added              = $member['date_added'] ?? '';
@@ -70,7 +70,7 @@ ob_start(); // Capture page content
               $member_firstname        = $member['first_name'] ?? '';
               $member_lastname         = $member['last_name'] ?? '';
               $member_account          = $member['account'] ?? '';
-              $member_email            = $member['email'] ?? '';
+              $member_mobileno            = $member['mobileno'] ?? '';
               $member_birthdate        = $member['birth_date'] ?? '';
               $member_civil_status     = $member['civil_status'] ?? '';
               $member_address          = $member['place_birth'] ?? '';
@@ -81,7 +81,7 @@ ob_start(); // Capture page content
               $member_pensioner_details= '';
               $cp_fullname             = '';
               $cp_contact              = '';
-              $cp_email                = '';
+              $cp_mobileno                = '';
               $cp_relationship         = '';
               $cp_occupation           = '';
               $date_added              = '';
@@ -180,8 +180,8 @@ ob_start(); // Capture page content
 
 
                  <div class="row">
-                <div class="col-lg-3 col-md-4 label">Email</div>
-                <div class="col-lg-9 col-md-8"><?= htmlspecialchars($cp_email); ?></div>
+                <div class="col-lg-3 col-md-4 label">mobileno</div>
+                <div class="col-lg-9 col-md-8"><?= htmlspecialchars($cp_mobileno); ?></div>
               </div>
 
                  <div class="row">
@@ -282,9 +282,9 @@ ob_start(); // Capture page content
                             </div>
 
                             <div class="col-md-6">
-                                <label for="email" class="form-label">Email ( Guardian / Contact Person )</label>
-                                <input type="email" name="email" value="<?= $member_email ?>" class="form-control" id="email" required>
-                                <div class="invalid-feedback">Please enter a valid email address!</div>
+                                <label for="mobileno" class="form-label">Mobile Number</label>
+                                <input type="mobileno" name="mobileno" value="<?= $member_mobileno ?>" class="form-control" id="mobileno" required>
+                                <div class="invalid-feedback">Please enter a valid mobileno address!</div>
                             </div>
 
 
