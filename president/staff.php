@@ -102,16 +102,31 @@ $result = $stmt->get_result();
                         <input type="text" name="last_name" class="form-control" required>
                     </div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">Chapter</label>
-                   <select name="chapter" class="form-select" required>
-                            <option value="">Select status</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+
+                                        <?php
+                    // Database connection (use your existing connection file if already included)
+
+
+                    $chapters = [];
+                    $query = "SELECT id, chapter_name FROM chapters ORDER BY chapter_name ASC";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $chapters[] = $row;
+                        }
+                    }
+                    ?>
+                      <div class="col-md-6">
+                        <label class="form-label">OSCA ID</label>
+                    <select name="chapter" class="form-select" required>
+                        <option value="">Select Chapter</option>
+                        <?php foreach ($chapters as $chapter): ?>
+                            <option value="<?= $chapter['id']; ?>">
+                                <?= htmlspecialchars($chapter['chapter_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                     </div>
 
                     <div class="col-md-6">
