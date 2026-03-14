@@ -93,6 +93,17 @@ ob_start(); // Capture page content
           $stmt2->close();
       }
 
+
+
+            // Prepare chapters for dropdown
+            $user_chapter = $member_chapter;
+            $chapters_result = mysqli_query($conn, "SELECT chapter_code, chapter_name FROM chapters ORDER BY chapter_name ASC");
+            $chapters = [];
+            if ($chapters_result) {
+                while ($row = mysqli_fetch_assoc($chapters_result)) {
+                    $chapters[] = $row;
+                }
+            }
       $stmt->close();
       $conn->close();
       ?>
@@ -201,102 +212,129 @@ ob_start(); // Capture page content
             </div>
 
             <!-- Edit Profile Tab -->
-          <div class="tab-pane fade profile-edit pt-3" id="profile-edit" role="tabpanel">
-              <p>Edit profile form goes here.</p>
-                <form id="updateProfile" class="row g-3 needs-validation" novalidate>
-                            <!-- Row 1 -->
-                             <div id="responseBox" class="mt-3 text-success"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="oscaId" class="form-label">OSCA ID No.</label>
-                                    <input type="text" value="<?= $osca_id ?>" name="osca_id" class="form-control" id="oscaId" required>
-                                    <div class="invalid-feedback">Please enter your OSCA ID!</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                  <label for="Chapter" class="form-label">Chapter</label>
-                                   <select name="chapter" class="form-select" id="chapter" required>
-                                    <option value="<?= $member_chapter ?>"><?= $member_chapter ?></option>
-                                    <option value="Chapter1">Chapter 1</option>
-
-                                    </select>
-                                    <div class="invalid-feedback">Please select Chapter!</div>
-
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" name="first_name" value="<?= $member_firstname ?>" class="form-control" id="firstName" required>
-                                    <div class="invalid-feedback">Please enter your first name!</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" name="last_name" value="<?= $member_lastname ?>" class="form-control" id="lastName" required>
-                                    <div class="invalid-feedback">Please enter your last name!</div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="birthDate" class="form-label">Birth Date</label>
-                                    <input type="date" name="birth_date" value="<?= $member_birthdate ?>" class="form-control" id="birthDate" required>
-                                    <div class="invalid-feedback">Please enter your birth date!</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="placeBirth" class="form-label">Place of Birth</label>
-                                    <input type="text" name="place_birth" value="<?= $member_address ?>" class="form-control" id="placeBirth" required>
-                                    <div class="invalid-feedback">Please enter your place of birth!</div>
-                                 </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="civilStatus" class="form-label">Civil Status</label>
-                                <input type="text" name="civil_status" value="<?= $member_civil_status ?>" class="form-control" id="civilStatus" required>
-                                <div class="invalid-feedback">Please enter your civil status!</div>
-                            </div>
-
-                            <!-- Row 2 -->
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="pensioner" class="form-label">Pensioner</label>
-                                    <select name="pensioner" class="form-select" id="pensioner" required>
-                                    <option value="<?= $member_pensioner ?>"><?= $member_pensioner ?></option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select pensioner status!</div>
-                                </div>
 
 
-                                <div class="col-md-6">
-                                    <label for="pensionDetails" class="form-label">Pension Details</label>
-                                    <input type="text" value="<?= $member_pensioner_details ?>" name="pension_details" class="form-control" id="pensionDetails">
-                                </div>
+                              <div class="tab-pane fade profile-edit pt-3" id="profile-edit" role="tabpanel">
+                      <form id="updateProfile" class="row g-3 needs-validation" novalidate>
+                         <div id="responseBox" class="mt-3 text-success"></div>
+
+                          <!-- OSCA ID and Chapter -->
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <label for="oscaId" class="form-label">OSCA ID No.</label>
+                                  <input type="text" value="<?= htmlspecialchars($osca_id) ?>" name="osca_id" class="form-control" id="oscaId" required>
+                                  <div class="invalid-feedback">Please enter your OSCA ID!</div>
+                              </div>
+
+                              <div class="col-md-6">
+                                  <label for="chapter" class="form-label">Chapter</label>
+                                  <select name="chapter" class="form-select" id="chapter" required>
+                                      <?php foreach ($chapters as $chapter):
+                                          $selected = ($chapter['chapter_code'] == $member_chapter) ? "selected" : "";
+                                      ?>
+                                          <option value="<?= htmlspecialchars($chapter['chapter_code'], ENT_QUOTES) ?>" <?= $selected ?>>
+                                              <?= htmlspecialchars($chapter['chapter_name']) ?>
+                                          </option>
+                                      <?php endforeach; ?>
+                                  </select>
+                                  <div class="invalid-feedback">Please select Chapter!</div>
+                              </div>
+                          </div>
+
+                          <!-- Personal Info -->
+                          <div class="row mt-2">
+                              <div class="col-md-6">
+                                  <label for="firstName" class="form-label">First Name</label>
+                                  <input type="text" name="first_name" value="<?= htmlspecialchars($member_firstname) ?>" class="form-control" id="firstName" required>
+                                  <div class="invalid-feedback">Please enter your first name!</div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="lastName" class="form-label">Last Name</label>
+                                  <input type="text" name="last_name" value="<?= htmlspecialchars($member_lastname) ?>" class="form-control" id="lastName" required>
+                                  <div class="invalid-feedback">Please enter your last name!</div>
+                              </div>
+                          </div>
+
+                          <div class="row mt-2">
+                              <div class="col-md-6">
+                                  <label for="birthDate" class="form-label">Birth Date</label>
+                                  <input type="date" name="birth_date" value="<?= htmlspecialchars($member_birthdate) ?>" class="form-control" id="birthDate" required>
+                                  <div class="invalid-feedback">Please enter your birth date!</div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="placeBirth" class="form-label">Place of Birth</label>
+                                  <input type="text" name="place_birth" value="<?= htmlspecialchars($member_address) ?>" class="form-control" id="placeBirth" required>
+                                  <div class="invalid-feedback">Please enter your place of birth!</div>
+                              </div>
+                          </div>
+
+                          <div class="col-md-6 mt-2">
+                              <label for="civilStatus" class="form-label">Civil Status</label>
+                              <input type="text" name="civil_status" value="<?= htmlspecialchars($member_civil_status) ?>" class="form-control" id="civilStatus" required>
+                              <div class="invalid-feedback">Please enter your civil status!</div>
+                          </div>
+
+                               <div class="col-md-6 mt-2">
+                              <label for="mobileNo" class="form-label">Mobile Number</label>
+                              <input type="text" name="mobileno" value="<?= htmlspecialchars($member_mobileno) ?>" class="form-control" id="mobileno" required>
+                              <div class="invalid-feedback">Please enter your mobile number!</div>
+                          </div>
 
 
-                            </div>
+                          <!-- Pension Info -->
+                          <div class="row mt-3">
+                              <div class="col-md-6">
+                                  <label for="pensioner" class="form-label">Pensioner</label>
+                                  <select name="pensioner" class="form-select" id="pensioner" required>
+                                      <option value="Yes" <?= ($member_pensioner === "Yes") ? "selected" : "" ?>>Yes</option>
+                                      <option value="No" <?= ($member_pensioner === "No") ? "selected" : "" ?>>No</option>
+                                  </select>
+                                  <div class="invalid-feedback">Please select pensioner status!</div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="pensionDetails" class="form-label">Pension Details</label>
+                                  <input type="text" name="pension_details" value="<?= htmlspecialchars($member_pensioner_details) ?>" class="form-control" id="pensionDetails">
+                              </div>
+                          </div>
 
-                            <div class="col-md-6">
-                                <label for="mobileno" class="form-label">Mobile Number ( Guardian / Contact Person )</label>
-                                <input type="mobileno" name="mobileno" value="<?= $member_mobileno ?>" class="form-control" id="mobileno" required>
-                                <div class="invalid-feedback">Please enter a valid email address!</div>
-                            </div>
+                          <!-- Contact Info -->
+                          <?php if ($member_account === "Associate"): ?>
+                          <hr>
+                          <h5>Contact Person Information</h5>
+                          <div class="row mt-2">
+                              <div class="col-md-6">
+                                  <label for="cpFullname" class="form-label">Full Name</label>
+                                  <input type="text" name="cp_fullname" value="<?= htmlspecialchars($cp_firstname . ' ' . $cp_lastname) ?>" class="form-control" id="cpFullname">
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="cpRelationship" class="form-label">Relationship</label>
+                                  <input type="text" name="cp_relationship" value="<?= htmlspecialchars($cp_relationship) ?>" class="form-control" id="cpRelationship">
+                              </div>
+                          </div>
+                          <div class="row mt-2">
+                              <div class="col-md-6">
+                                  <label for="cpContact" class="form-label">Contact</label>
+                                  <input type="text" name="cp_contact" value="<?= htmlspecialchars($cp_contact) ?>" class="form-control" id="cpContact">
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="cpEmail" class="form-label">Email</label>
+                                  <input type="email" name="cp_email" value="<?= htmlspecialchars($cp_email) ?>" class="form-control" id="cpEmail">
+                              </div>
+                          </div>
+                          <div class="col-md-6 mt-2">
+                              <label for="cpOccupation" class="form-label">Occupation</label>
+                              <input type="text" name="cp_occupation" value="<?= htmlspecialchars($cp_occupation) ?>" class="form-control" id="cpOccupation">
+                          </div>
+                          <?php endif; ?>
+                            <input type="hidden" name="member_account" value="<?= htmlspecialchars($member_account) ?>">
+                          <div class="col-12 mt-3">
+                              <button class="btn btn-primary w-100" type="submit">Update Account</button>
+                          </div>
+                      </form>
+                  </div>
 
 
 
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100" type="submit">Update Account</button>
-
-                            </div>
-
-                            </form>
-          </div>
             <div class="tab-pane fade profile-change-pass pt-3" id="profile-change-pass" role="tabpanel">
                               <form id="updatePassword" class="row g-3 needs-validation" novalidate>
                       <div id="responseBoxes" class="mt-3 text-success"></div>

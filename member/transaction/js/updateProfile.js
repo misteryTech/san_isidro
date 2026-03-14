@@ -25,15 +25,24 @@ fetch("transaction/php/update_profile.php", {
   })
   .then((data) => {
     let responseBox = document.getElementById("responseBox");
+
     if (data.status === "success") {
-      responseBox.classList.remove("text-danger");
+      responseBox.classList.remove("text-danger", "d-none");
       responseBox.classList.add("text-success");
       responseBox.textContent = data.message;
     } else {
-      responseBox.classList.remove("text-success");
+      responseBox.classList.remove("text-success", "d-none");
       responseBox.classList.add("text-danger");
       responseBox.textContent = data.message;
     }
+
+    // Scroll to the message so user sees it
+    responseBox.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    // Auto-hide after 5 seconds (optional)
+    setTimeout(() => {
+      responseBox.textContent = "";
+    }, 5000);
   })
   .catch((err) => console.error("Error:", err));
 

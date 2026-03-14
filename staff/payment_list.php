@@ -7,6 +7,7 @@ SELECT
     u.osca_id,
     u.status AS user_status,
     u.date_registration,
+    u.position,
 
     -- total approved deceased benefits *after user registration*
     COUNT(dba.id) AS total_deceased_benefits,
@@ -33,8 +34,12 @@ LEFT JOIN (
     ON p.osca_id = u.osca_id COLLATE utf8mb4_unicode_ci
     AND p.deceased_benefit_id = dba.id
 
+    WHERE u.position='member'
+
 GROUP BY u.osca_id, u.date_registration
 ORDER BY total_missed_payments DESC
+
+
 ";
 
 $result = mysqli_query($conn, $query);

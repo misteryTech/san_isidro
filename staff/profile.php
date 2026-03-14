@@ -10,7 +10,7 @@ ob_start(); // Capture page content
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item">Members</li>
+      <li class="breadcrumb-item">Staff</li>
       <li class="breadcrumb-item active">Profile</li>
     </ol>
   </nav>
@@ -20,51 +20,49 @@ ob_start(); // Capture page content
   <div class="row">
     <!-- Left Column: Profile Card -->
     <div class="col-xl-4">
-      <?php
-      include(__DIR__ . '/../database/connection.php');
-        $stmt = $conn->prepare("
-            SELECT ut.*
-            FROM user_table AS ut
+<?php
+include(__DIR__ . '/../database/connection.php');
 
-            WHERE ut.osca_id = ?
-        ");
-        $stmt->bind_param("s", $osca_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+$stmt = $conn->prepare("
+    SELECT *
+    FROM user_table
+    WHERE osca_id = ?
+");
+$stmt->bind_param("s", $osca_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $member = $result->fetch_assoc();
+if ($result->num_rows > 0) {
+    $member = $result->fetch_assoc();
 
-            $member_firstname        = $member['first_name'] ?? '';
-            $member_chapter          = $member['chapter'] ?? '';
-            $member_lastname         = $member['last_name'] ?? '';
-            $member_account          = $member['account'] ?? '';
-            $member_email            = $member['email'] ?? '';
-            $member_birthdate        = $member['birth_date'] ?? '';
-            $member_civil_status     = $member['civil_status'] ?? '';
-            $member_address          = $member['place_birth'] ?? '';
-            $member_pensioner        = $member['pensioner'] ?? '';
-            $member_pensioner_details= $member['pension_details'] ?? '';
-            $cp_fullname= $member['cp_fullname'] ?? '';
-            $cp_contact= $member['cp_contact'] ?? '';
-            $cp_email= $member['cp_email'] ?? '';
-            $cp_relationship= $member['cp_relationship'] ?? '';
-            $cp_occupation= $member['cp_occupation'] ?? '';
-            $date_added= $member['date_added'] ?? '';
-        } else {
-            echo "<div class='alert alert-warning'>No member found with that OSCA ID.</div>";
-        }
+    $member_firstname        = $member['first_name'] ?? '';
+    $member_chapter          = $member['chapter'] ?? '';
+    $member_lastname         = $member['last_name'] ?? '';
+    $member_account          = $member['account'] ?? '';
+    $member_email            = $member['email'] ?? '';
+    $member_birthdate        = $member['birth_date'] ?? '';
+    $member_civil_status     = $member['civil_status'] ?? '';
+    $member_address          = $member['place_birth'] ?? '';
+    $member_pensioner        = $member['pensioner'] ?? '';
+    $member_pensioner_details= $member['pension_details'] ?? '';
+}
 
+/* ✅ FETCH CHAPTERS HERE */
+$chapters = [];
+$chapterResult = $conn->query("SELECT chapter_name FROM chapters ORDER BY chapter_name ASC");
 
-      $stmt->close();
-      $conn->close();
-      ?>
+if ($chapterResult) {
+    while ($row = $chapterResult->fetch_assoc()) {
+        $chapters[] = $row['chapter_name'];
+    }
+}
+?>
 
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
           <h1><?= htmlspecialchars($osca_id); ?></h1>
           <h2><?= htmlspecialchars($member_firstname . ' ' . $member_lastname); ?></h2>
-          <h3><?= htmlspecialchars($member_account) ?> Member</h3>
+          <h3>Staff</h3>
         </div>
       </div>
     </div>
@@ -177,14 +175,22 @@ ob_start(); // Capture page content
                                 </div>
 
                                 <div class="col-md-6">
-                                  <label for="Chapter" class="form-label">Chapter</label>
-                                   <select name="chapter" class="form-select" id="chapter" required>
-                                    <option value="<?= $member_chapter ?>"><?= $member_chapter ?></option>
-                                    <option value="Chapter1">Chapter 1</option>
 
-                                    </select>
-                                    <div class="invalid-feedback">Please select Chapter!</div>
+                                 <label for="chapter" class="form-label">Chapter</label>
+                                  <select name="chapter" class="form-select" id="chapter" required>
 
+                                      <option value="" disabled>Select Chapter</option>
+
+                                      <?php foreach ($chapters as $chapter_name): ?>
+                                          <option value="<?= htmlspecialchars($chapter_name); ?>"
+                                              <?= ($chapter_name === $member_chapter) ? 'selected' : ''; ?>>
+                                              <?= htmlspecialchars($chapter_name); ?>
+                                          </option>
+                                      <?php endforeach; ?>
+
+                                  </select>
+
+                                  <div class="invalid-feedback">Please select Chapter!</div>
                                 </div>
                             </div>
 
@@ -307,6 +313,8 @@ ob_start(); // Capture page content
 
 <?php
 $content = ob_get_clean();
+      $stmt->close();
+      $conn->close();
 include __DIR__ . '/../templates/layout.php';
 ?>
 
