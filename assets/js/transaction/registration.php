@@ -29,14 +29,13 @@ if (empty($osca_id) || empty($first_name) || empty($last_name) || empty($mobilen
     response("error", "Please fill in all required fields.");
 }
 
-// Check duplicate email or OSCA ID
-$check = $conn->prepare("SELECT id FROM user_table WHERE mobileno = ? OR osca_id = ?");
-$check->bind_param("ss", $mobileno, $osca_id);
+// Check duplicate OSCA ID only
+$check = $conn->prepare("SELECT id FROM user_table WHERE osca_id = ?");
+$check->bind_param("s", $osca_id);
 $check->execute();
 $check->store_result();
-
 if ($check->num_rows > 0) {
-    response("error", "Mobile Number or OSCA ID is already registered.");
+    response("error", "OSCA ID is already registered.");
 }
 $check->close();
 

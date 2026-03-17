@@ -5,6 +5,8 @@ require_once __DIR__ . '/../database/connection.php';
 $query = "
 SELECT
     u.osca_id,
+    u.first_name,
+    u.last_name,
     u.status AS user_status,
     u.date_registration,
 
@@ -33,7 +35,7 @@ LEFT JOIN (
     ON p.osca_id = u.osca_id COLLATE utf8mb4_unicode_ci
     AND p.deceased_benefit_id = dba.id
 
-GROUP BY u.osca_id, u.date_registration
+GROUP BY u.osca_id, u.first_name, u.last_name, u.date_registration
 ORDER BY total_missed_payments DESC
 ";
 
@@ -50,6 +52,7 @@ $result = mysqli_query($conn, $query);
                         <thead class="table-dark">
                             <tr>
                                 <th>OSCA ID</th>
+                                <th>Name</th>
                                 <th>Status</th>
                                 <th>Registration Date</th>
                                 <th>Total Approved Benefits</th>
@@ -62,8 +65,14 @@ $result = mysqli_query($conn, $query);
                         <tbody>
                         <?php if (mysqli_num_rows($result) > 0): ?>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <?php
+                                    $fullName = ucfirst(strtolower($row['first_name']))
+                                              . ' '
+                                              . ucfirst(strtolower($row['last_name']));
+                                ?>
                                 <tr data-osca-id="<?= htmlspecialchars($row['osca_id']) ?>">
                                     <td><?= htmlspecialchars($row['osca_id']) ?></td>
+                                    <td><?= htmlspecialchars($fullName) ?></td>
                                     <td><?= htmlspecialchars($row['user_status']) ?></td>
                                     <td><?= htmlspecialchars($row['date_registration']) ?></td>
                                     <td><?= (int)$row['total_deceased_benefits'] ?></td>
@@ -77,7 +86,6 @@ $result = mysqli_query($conn, $query);
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <!-- Open one shared modal -->
                                         <button type="button" class="btn btn-warning set-inactive-btn"
                                                 data-osca-id="<?= htmlspecialchars($row['osca_id']) ?>"
                                                 data-bs-toggle="modal" data-bs-target="#inactiveModal">
@@ -88,7 +96,7 @@ $result = mysqli_query($conn, $query);
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
+                                <td colspan="9" class="text-center text-muted py-4">
                                     No payment records found.
                                 </td>
                             </tr>
